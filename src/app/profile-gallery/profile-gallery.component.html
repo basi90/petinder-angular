@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row">
     <div id="gallery" class="col-md-9">
-      <div class="gallery">
+      <ng-container *ngIf="pets$ | async as petList">
         @for (pet of petList; track pet.id) {
           <div class="gallery-pet fader">
             <img
@@ -15,7 +15,7 @@
             </div>
           </div>
         }
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>
