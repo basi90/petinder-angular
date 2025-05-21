@@ -1,1 +1,21 @@
-<p>profile-gallery works!</p>
+<!-- <p style="color:white">json : {{petList | json}}</p> -->
+<div class="container-fluid">
+  <div class="row">
+    <div id="gallery" class="col-md-9">
+      <div class="gallery">
+        @for (pet of petList; track pet.id) {
+          <div class="gallery-pet fader">
+            <img
+              class="profile-picture"
+              [src]="'https://pettinder.herokuapp.com/' + pet.image"
+              alt="{{ pet.name }}"
+            />
+            <div class="overlay">
+              <div class="overlay-text">{{ pet.name }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
