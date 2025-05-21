@@ -2,6 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
+import { Pet } from '../model/Pet';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,8 @@ export class PetService {
   }
 
   getPets(): Observable<any> {
-    return this.http.get(this.url);
+    return this.http.get<Pet[]>(this.url).pipe(
+      map(pets => pets.sort((a, b) => a.name.localeCompare(b.name)))
+    );
   }
 }
