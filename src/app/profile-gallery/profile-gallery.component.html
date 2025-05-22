@@ -2,8 +2,19 @@
 <div class="container-fluid">
   <div class="row">
     <div id="gallery" class="col-md-9">
+      <section class="tiny-dialog">
+        <h3>Find your pet</h3>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name"
+              name="name"
+              class="form-control"
+              placeholder="Name"
+              [(ngModel)]="searchText">
+        </div>
+      </section>
       <ng-container *ngIf="pets$ | async as petList">
-        @for (pet of petList; track pet.id) {
+        @for (pet of petList; nameFilter:searchText; track pet.id) {
           <div class="gallery-pet fader" (click)="selectPet(pet)" [class.active]="selectedPet===pet">
             <img
               class="profile-picture"

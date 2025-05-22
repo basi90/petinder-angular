@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PetService } from '../service/pet.service';
 import { Pet } from '../model/Pet';
-import { AsyncPipe } from '@angular/common';
-// import { JsonPipe } from '@angular/common';
+import { NameFilterPipe } from '../pipes/name-filter.pipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-gallery',
-  imports: [AsyncPipe, CommonModule],
+  imports: [NameFilterPipe, CommonModule, FormsModule],
   templateUrl: './profile-gallery.component.html',
   styleUrl: './profile-gallery.component.css'
 })
@@ -18,6 +18,8 @@ export class ProfileGalleryComponent{
   pets$ = this.petService.getPets()
 
   selectedPet: Pet | null = null
+  searchText: string = ''
+
 
 
   selectPet(pet: Pet) {
