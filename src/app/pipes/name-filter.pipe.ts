@@ -3,7 +3,6 @@ import { Pet } from '../model/Pet';
 
 @Pipe({
   name: 'nameFilter'
-  // standalone: true
 })
 export class NameFilterPipe implements PipeTransform {
 

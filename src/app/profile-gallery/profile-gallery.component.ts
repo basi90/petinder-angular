@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-gallery',
-  imports: [NameFilterPipe, CommonModule, FormsModule],
+  imports: [CommonModule, NameFilterPipe, FormsModule],
   templateUrl: './profile-gallery.component.html',
   styleUrl: './profile-gallery.component.css'
 })
