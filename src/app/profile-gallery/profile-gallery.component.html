@@ -2,17 +2,6 @@
 <div class="container-fluid">
   <div class="row">
     <div id="gallery" class="col-md-9">
-      <section class="tiny-dialog">
-        <h3>Find your pet</h3>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input id="name"
-              name="name"
-              class="form-control"
-              placeholder="Name"
-              [(ngModel)]="searchText">
-        </div>
-      </section>
       <ng-container *ngIf="pets$ | async as petList">
         @for (pet of petList | nameFilter: searchText; track pet.id) {
           <div class="gallery-pet fader" (click)="selectPet(pet)" [class.active]="selectedPet===pet">
@@ -38,16 +27,47 @@
         </div>
       </div>
     }
+    <div class="col-md-3">
+      <div class="galley-details">
+        <section class="tiny-dialog">
+          <h3>Find your pet</h3>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name"
+                name="name"
+                class="form-control"
+                placeholder="Name"
+                [(ngModel)]="searchText">
+          </div>
+        </section>
+      </div>
+    </div>
     <p>Form Status: {{ dogForm.status }}</p>
-    <form [formGroup]="dogForm" (ngSubmit)="onSubmit()">
-      <label for="name">Name: </label>
-      <input id="name" type="text" formControlName="name">
-      <label for="kind">Kind: </label>
-      <input id="kind" type="text" formControlName="kind">
-      <label for="image">Image: </label>
-      <input id="image" type="text" formControlName="image">
-      <label for="profileText">Description: </label>
-      <input id="profileText" type="text" formControlName="profileText">
-    </form>
+    <div class="col-md-3">
+      <div class="gallery-detail">
+        <section id="addPetForm" class="tiny-dialog fader">
+          <h3>Add a New Pet</h3>
+          <form [formGroup]="dogForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" class="form-control" type="text" formControlName="name">
+            </div>
+            <div class="form-group">
+              <label for="kind">Kind</label>
+              <input id="kind" class="form-control" type="text" formControlName="kind">
+            </div>
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input id="image" class="form-control" type="text" formControlName="image" placeholder="images/fluffy.jpg">
+            </div>
+            <div class="form-group">
+              <label for="profileText">Description</label>
+              <textarea id="profileText" class="form-control" formControlName="profileText"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="dogForm.invalid">Add Pet</button>
+          </form>
+        </section>
+      </div>
+    </div>
   </div>
 </div>

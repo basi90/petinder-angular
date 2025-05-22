@@ -34,7 +34,24 @@ export class ProfileGalleryComponent{
     this.selectedPet = pet
   }
 
-  onSubmit() {}
+  onSubmit() {
+    // if (this.dogForm.valid) {
+    //   const newPet: Pet = this.dogForm.value;
+
+    //   newPet.image = newPet.image?.trim();
+
+    //   this.petService.addPet(newPet).subscribe({
+    //     next: () => {
+    //       this.pets$ = this.petService.getPets();
+    //       this.dogForm.reset();
+    //     },
+    //     error: (err) => {
+    //       console.error('Failed to add pet:', err);
+    //     }
+    //   });
+    // }
+  }
+
 
   // ngOnInit() {
   //   this.getPets()
