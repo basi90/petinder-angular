@@ -5,6 +5,7 @@ import { Pet } from '../model/Pet';
 import { NameFilterPipe } from '../pipes/name-filter.pipe';
 import { FormsModule } from '@angular/forms';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import { CreatePet } from '../model/CreatePet';
 
 @Component({
   selector: 'app-profile-gallery',
@@ -27,7 +28,8 @@ export class ProfileGalleryComponent{
     name:[''],
     kind:[''],
     image:[''],
-    profileText:['']
+    profileText:[''],
+    popularity:[0]
   });
 
   selectPet(pet: Pet) {
@@ -35,21 +37,27 @@ export class ProfileGalleryComponent{
   }
 
   onSubmit() {
-    // if (this.dogForm.valid) {
-    //   const newPet: Pet = this.dogForm.value;
+    if (this.dogForm.valid) {
+      const formValue = this.dogForm.value;
 
-    //   newPet.image = newPet.image?.trim();
+      const newPet: CreatePet = {
+        name: formValue.name?.trim() || '',
+        kind: formValue.kind?.trim() || '',
+        image: formValue.image?.trim() || '',
+        profileText: formValue.profileText?.trim() || '',
+        popularity: formValue.popularity ?? 0
+      };
 
-    //   this.petService.addPet(newPet).subscribe({
-    //     next: () => {
-    //       this.pets$ = this.petService.getPets();
-    //       this.dogForm.reset();
-    //     },
-    //     error: (err) => {
-    //       console.error('Failed to add pet:', err);
-    //     }
-    //   });
-    // }
+      this.petService.addPet(newPet).subscribe({
+        next: () => {
+          this.pets$ = this.petService.getPets();
+          this.dogForm.reset({ popularity: 0 }); // optional reset with default
+        },
+        error: (err) => {
+          console.error('Failed to add pet:', err);
+        }
+      });
+    }
   }
 
 

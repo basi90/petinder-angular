@@ -4,6 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
 import { Pet } from '../model/Pet';
 import { map } from 'rxjs';
+import { CreatePet } from '../model/CreatePet';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class PetService {
     );
   }
 
-  addPet(pet: Pet): Observable<Pet> {
+  addPet(pet: CreatePet): Observable<Pet> {
     return this.http.post<Pet>(this.url, pet)
   }
 }
