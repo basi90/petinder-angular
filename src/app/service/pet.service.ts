@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import {environment} from "../../environments/environment";
 import { Pet } from '../model/Pet';
 import { map } from 'rxjs';
@@ -22,5 +22,9 @@ export class PetService {
     return this.http.get<Pet[]>(this.url).pipe(
       map(pets => pets.sort((a, b) => a.name.localeCompare(b.name)))
     );
+  }
+
+  addPet(pet: Pet): Observable<Pet> {
+    return this.http.post<Pet>(this.url, pet)
   }
 }

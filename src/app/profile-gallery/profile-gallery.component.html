@@ -23,7 +23,7 @@
             />
             <div class="overlay">
               <div class="overlay-text">{{ pet.name }}</div>
-            </div>
+            </div>us: VALID
           </div>
         }
       </ng-container>
@@ -38,5 +38,16 @@
         </div>
       </div>
     }
+    <p>Form Status: {{ dogForm.status }}</p>
+    <form [formGroup]="dogForm" (ngSubmit)="onSubmit()">
+      <label for="name">Name: </label>
+      <input id="name" type="text" formControlName="name">
+      <label for="kind">Kind: </label>
+      <input id="kind" type="text" formControlName="kind">
+      <label for="image">Image: </label>
+      <input id="image" type="text" formControlName="image">
+      <label for="profileText">Description: </label>
+      <input id="profileText" type="text" formControlName="profileText">
+    </form>
   </div>
 </div>
