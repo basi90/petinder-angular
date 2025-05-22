@@ -4,7 +4,7 @@
     <div id="gallery" class="col-md-9">
       <ng-container *ngIf="pets$ | async as petList">
         @for (pet of petList; track pet.id) {
-          <div class="gallery-pet fader" (click)="selectPet(pet)">
+          <div class="gallery-pet fader" (click)="selectPet(pet)" [class.active]="selectedPet===pet">
             <img
               class="profile-picture"
               [src]="'https://pettinder.herokuapp.com/' + pet.image"
