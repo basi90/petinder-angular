@@ -4,7 +4,7 @@
     <div id="gallery" class="col-md-9">
       <ng-container *ngIf="pets$ | async as petList">
         @for (pet of petList; track pet.id) {
-          <div class="gallery-pet fader">
+          <div class="gallery-pet fader" (click)="selectPet(pet)">
             <img
               class="profile-picture"
               [src]="'https://pettinder.herokuapp.com/' + pet.image"
@@ -16,6 +16,14 @@
           </div>
         }
       </ng-container>
+    </div>
+    <div class="col-md-3">
+      <div class="gallery-detail">
+        <section id="petProfile" class="tiny-dialog fader">
+          <h3>Name of Pet</h3>
+          <p>Profile text of Pet</p>
+        </section>
+      </div>
     </div>
   </div>
 </div>
