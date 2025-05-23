@@ -52,7 +52,7 @@ export class ProfileGalleryComponent{
       this.petService.addPet(newPet).subscribe({
         next: () => {
           this.pets$ = this.petService.getPets();
-          this.dogForm.reset({ popularity: 0 }); // optional reset with default
+          this.dogForm.reset({ popularity: 0 });
         },
         error: (err) => {
           console.error('Failed to add pet:', err);
