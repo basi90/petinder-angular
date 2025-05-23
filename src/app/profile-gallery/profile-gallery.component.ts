@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PetService } from '../service/pet.service';
@@ -7,6 +7,8 @@ import { NameFilterPipe } from '../pipes/name-filter.pipe';
 import { FormsModule } from '@angular/forms';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import { CreatePet } from '../model/CreatePet';
+import { takeUntil } from 'rxjs/operators';
+import { Destroyable } from '../shared/destroyable';
 
 @Component({
   selector: 'app-profile-gallery',
@@ -14,7 +16,7 @@ import { CreatePet } from '../model/CreatePet';
   templateUrl: './profile-gallery.component.html',
   styleUrl: './profile-gallery.component.css'
 })
-export class ProfileGalleryComponent{
+export class ProfileGalleryComponent extends Destroyable implements OnDestroy{
   // petList: Pet[] = []
   petService: PetService = inject(PetService)
   formBuilder: FormBuilder = inject(FormBuilder)
@@ -33,6 +35,10 @@ export class ProfileGalleryComponent{
     popularity:[0]
   });
 
+  constructor() {
+    super()
+  }
+
   selectPet(pet: Pet) {
     this.selectedPet = pet
   }
@@ -49,15 +55,18 @@ export class ProfileGalleryComponent{
         popularity: formValue.popularity ?? 0
       };
 
-      this.petService.addPet(newPet).subscribe({
-        next: () => {
-          this.pets$ = this.petService.getPets();
-          this.dogForm.reset({ popularity: 0 });
-        },
-        error: (err) => {
-          console.error('Failed to add pet:', err);
-        }
-      });
+      this.petService.addPet(newPet)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            console.log('[addPet] Subscription triggered');
+            this.pets$ = this.petService.getPets();
+            this.dogForm.reset({ popularity: 0 });
+          },
+          error: (err) => {
+            console.error('Failed to add pet:', err);
+          }
+        });
     }
   }
 

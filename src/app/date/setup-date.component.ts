@@ -4,6 +4,8 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PetService } from '../service/pet.service';
 import { Pet } from '../model/Pet';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Destroyable } from '../shared/destroyable';
 
 @Component({
   selector: 'app-setup-date',
@@ -11,7 +13,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './setup-date.component.html',
   styleUrl: './setup-date.component.css'
 })
-export class SetupDateComponent implements OnInit {
+export class SetupDateComponent extends Destroyable implements OnInit {
   petName: string = ''
   pet: Pet | null = null
   sendTextForm: FormGroup
@@ -22,16 +24,19 @@ export class SetupDateComponent implements OnInit {
 
 
   constructor() {
-      this.sendTextForm = this.formBuilder.group({
+    super();
+    this.sendTextForm = this.formBuilder.group({
       message: ['']
     });
   }
 
   ngOnInit(): void {
     this.petName = this.route.snapshot.paramMap.get('name') ?? '';
-    this.petService.getPets().subscribe((pets: Pet[]) => {
-      this.pet = pets.find(p => p.name === this.petName) ?? null;
-    });
+    this.petService.getPets()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((pets: Pet[]) => {
+        this.pet = pets.find(p => p.name === this.petName) ?? null;
+      });
   }
 
   onSubmit(): void {
