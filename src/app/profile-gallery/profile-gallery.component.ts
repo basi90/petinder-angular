@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { PetService } from '../service/pet.service';
 import { Pet } from '../model/Pet';
 import { NameFilterPipe } from '../pipes/name-filter.pipe';
@@ -9,7 +10,7 @@ import { CreatePet } from '../model/CreatePet';
 
 @Component({
   selector: 'app-profile-gallery',
-  imports: [CommonModule, NameFilterPipe, FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, NameFilterPipe, FormsModule,ReactiveFormsModule, RouterModule],
   templateUrl: './profile-gallery.component.html',
   styleUrl: './profile-gallery.component.css'
 })
