@@ -34,7 +34,7 @@ export class SetupDateComponent implements OnInit {
     });
   }
 
-    onSubmit(): void {
+  onSubmit(): void {
     if (this.sendTextForm.valid) {
       const message = this.sendTextForm.value.message;
       console.log(`Sending message to ${this.petName}: ${message}`);
